@@ -9,10 +9,6 @@
 
 int main() {
     LList<int> *test = new LList<int>();
-    test -> addToEnd(1);
-    test -> addToEnd(2);
-    test -> addToEnd(3);
-    test -> addToEnd(4);
     test -> displayList();
     cout << test -> getLength() << endl;
     return 1;

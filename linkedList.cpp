@@ -75,6 +75,8 @@ void LList<Item>::addToEnd(Item value) {
     //if the intention is to have a new list
     //since we have newNode already, just use that
     if (startNode == NULL) {
+        startNode = newNode;
+        length += 1;
         return;
     }
 
@@ -108,6 +110,7 @@ void LList<Item>::addToBeginning(Item value) {
     }
     if (startNode == NULL) {
         startNode = newNode;
+        length += 1;
         return;
     }
     //setting the next pointer of newNode to the first node
@@ -135,8 +138,20 @@ int LList<Item>::addAtIndex(Item value, int index) {
     }
     //for NULL startNode, the function returns an error code
     //in the case where the user is trying to initialize a new list,
-    //then an index would not make sense. Use AddToBeginning instead
-    if (startNode == NULL ^ newNode == NULL) {
+    //then an index would not make sense.
+    if (newNode == NULL) {
+        return 1;
+    }
+    //special indices cases
+    if (index == 0) {
+        addToBeginning(value);
+        return 0;
+    }
+    if (index == length) {
+        addToEnd(value);
+        return 0;
+    }
+    if (startNode == NULL) {
         return 1;
     }
 
@@ -145,7 +160,7 @@ int LList<Item>::addAtIndex(Item value, int index) {
     //putting the traverser on the index to add the node
     //if next is NULL, then the function returns an error code
     //in the case someone wants to add a node at the end, just use addToEnd
-    for (int i = 0; i < index; i++) {
+    for (int i = 1; i < index; i++) {
         if (traverser -> next != NULL) {
             traverser = traverser -> next;
         }
@@ -204,7 +219,7 @@ typename LList<Item>::node* LList<Item>::removeAtIndex(int index) {
             traverser = traverser -> next;
         }
         else {
-            return 1;
+            return NULL;
         }
     }
 
@@ -262,7 +277,6 @@ int LList<Item>::removeByValue(Item delValue) {
     //special part for removing the start node
     if ((startNode) -> value == delValue) {
         delete removeAtStart();
-        counter += 1;
     }
     length -= counter;
 
