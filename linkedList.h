@@ -3,9 +3,12 @@
  * Final project for Spring2019 - spendings-tracker
  * */
 
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+
 template <class Item>
 class LList {
-    private:
+    public:
         struct node {
             Item value;
             node* next;
@@ -14,10 +17,7 @@ class LList {
                 next = n;
             }
         };
-        node* startNode;
-        int length;
-
-    public:
+    
         LList();
         ~LList();
         void displayList();
@@ -30,5 +30,11 @@ class LList {
         node* removeAtStart();
         node* removeAtEnd();
         node* findByValue(Item value);
+    
+    private:
+        node* startNode;
+        int length;
 
 };
+
+#endif
