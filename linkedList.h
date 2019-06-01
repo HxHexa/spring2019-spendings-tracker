@@ -8,7 +8,7 @@
 
 template <class Item>
 class LList {
-    public:
+    protected:
         struct node {
             Item value;
             node* next;
@@ -17,9 +17,14 @@ class LList {
                 next = n;
             }
         };
+        node* startNode;
+        int length;
     
+    public:
         LList();
         ~LList();
+        LList(const LList&);
+        LList<Item>& operator=(const LList&);
         void displayList();
         int getLength();
         void addToEnd(Item value);
@@ -30,11 +35,6 @@ class LList {
         node* removeAtStart();
         node* removeAtEnd();
         node* findByValue(Item value);
-    
-    private:
-        node* startNode;
-        int length;
-
 };
 
 #endif

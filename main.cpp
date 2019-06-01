@@ -7,23 +7,30 @@
 
 #include <iostream>
 #include <string>
-#include "hashTable.h"
-#include "spendEntry.h"
-#include "namedList.h"
-#include "linkedList.h"
+#include "hashTable.cpp"
+#include "spendEntry.cpp"
+#include "namedList.cpp"
+#include "linkedList.cpp"
 using namespace std;
 
 int main() {
-    auto source = new HashTable<NamedList<SpendEntry>*>();
-    auto category = new HashTable<NamedList<SpendEntry>*>();
-    auto test1 = new NamedList<int>("test1");
-    auto test2 = new NamedList<int>("test2");
-    test1 -> displayList();
-    test2 -> displayList();
+    HashTable<NamedList<int>*>* source = new HashTable<NamedList<int>*>();
+    HashTable<NamedList<int>*>* category = new HashTable<NamedList<int>*>();
+    NamedList<int>* test1 = new NamedList<int>("test1");
+    test1 -> addToEnd(7);
+    test1 -> addToEnd(6);
+    test1 -> addToEnd(5);
+    NamedList<int>* test2 = new NamedList<int>("test1");
+    test2 -> addToEnd(7);
+    test2 -> addToEnd(6);
+    test2 -> addToEnd(5);
+    test1 -> displayList(); test2 -> displayList();
+    /*if (*test1 == *test2) cout << "equal";
+    else cout << "unequal";*/
+    source -> insertItem(&test1);
+    source -> findItem(&test2);
+    source -> deleteItem(&test2);
+    test1 -> displayList(); test2 -> displayList();
     source -> display();
-    category -> display();
-    //if (test1 == test2) {
-    //    cout << "equal\n";
-    //} else cout << "unequal\n";
     return 0;
 }

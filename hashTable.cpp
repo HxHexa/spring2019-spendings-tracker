@@ -58,9 +58,9 @@ Item* HashTable<Item>::findItem(Item* findEntry) {
     int hashValue = hashFunction(*findEntry);
     int iteratorValue = hashFunctionIterator(*findEntry);
     while(true) {
-        cout << hashValue << " " << status_table[hashValue] << endl;
-        if (table[hashValue] != NULL && *table[hashValue] == *findEntry) {
-            cout << "Item found at index " << hashValue;
+        if (table[hashValue] != NULL &&
+           ((*table[hashValue] == *findEntry) || (**table[hashValue] == **findEntry))) {
+            cout << "Item found at index " << hashValue << endl;
             return findEntry;
         }
         else if (status_table[hashValue] == 0) {
@@ -78,7 +78,8 @@ Item* HashTable<Item>::deleteItem(Item* deleteEntry) {
     int hashValue = hashFunction(*deleteEntry);
     int iteratorValue = hashFunctionIterator(*deleteEntry);
     while(true) {
-        if (table[hashValue] != NULL && *table[hashValue] == *deleteEntry) {
+        if (table[hashValue] != NULL &&
+           ((*table[hashValue] == *deleteEntry) || (**table[hashValue] == **deleteEntry))) {
             status_table[hashValue] = -1;
             table[hashValue] = NULL;
             return deleteEntry;

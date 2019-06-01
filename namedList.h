@@ -22,6 +22,7 @@ class NamedList: public LList<Item> {
         NamedList(string listName);
         void rename(string newName);
         string getName();
+        void displayList();
         bool operator== (NamedList<Item>);
 };
 

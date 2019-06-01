@@ -26,7 +26,47 @@ LList<Item>::~LList() {
         delete removeAtStart();
     }
     delete(startNode);
-    cout << "Destroyed list." << endl;
+}
+
+/* rule of 3 found from
+ * https://stackoverflow.com/questions/44809676/c-operator-overload-calling-destructor
+ * https://en.cppreference.com/w/cpp/language/rule_of_three
+ * used to assist with overloading of operator== not deleting the structure
+ * */
+
+//copy construcor with help from
+//https://www.tutorialspoint.com/cplusplus/cpp_copy_constructor.htm
+//https://www.geeksforgeeks.org/copy-constructor-in-cpp/
+template <class Item>
+LList<Item>::LList(const LList& org) {
+    startNode = NULL;
+    length = 0;
+    if (org.startNode == NULL) return;
+    else {
+        node* traverser = org.startNode;
+        while (traverser != NULL) {
+            addToEnd(traverser -> value);
+            traverser = traverser -> next;
+        }
+    }
+}
+
+//copy assignment operator
+//https://www.geeksforgeeks.org/copy-constructor-vs-assignment-operator-in-c/
+template <class Item>
+LList<Item>& LList<Item>::operator=(const LList& org) {
+    LList<Item> copy;
+    copy.startNode = NULL;
+    copy.length = 0;
+    if (org.startNode == NULL) return copy;
+    else {
+        node* traverser = org.startNode;
+        while (traverser != NULL) {
+            addToEnd(traverser -> value);
+            traverser = traverser -> next;
+        }
+        return copy;
+    }
 }
 
 /* displayList()
@@ -345,12 +385,12 @@ template <class Item>
 typename LList<Item>::node* LList<Item>::findByValue(Item value) {
     //initialize newNode
     node* newNode = new node(value, NULL);
-    
+
     //no NULL startNode
     if (startNode == NULL) {
         return NULL;
     }
-    
+
     //initialize traverser
     node* traverser = startNode;
 
@@ -358,6 +398,7 @@ typename LList<Item>::node* LList<Item>::findByValue(Item value) {
     //if found, the node is returned
     while (traverser != NULL) {
         if (traverser -> value == value) {
+            delete newNode;
             return traverser;
         }
         traverser = traverser -> next;
