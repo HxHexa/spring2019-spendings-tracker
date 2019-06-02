@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <string>
+//for some reason I could not get it to work with including the headers.
+//Something wrong with the linker? I have no idea
 #include "hashTable.cpp"
 #include "spendEntry.cpp"
 #include "namedList.cpp"
